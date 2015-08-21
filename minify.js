@@ -1,17 +1,17 @@
 var stream = require('stream');
-var fs = require('fs'); // require file system
+var fs = require('fs'); // require file system Write buffer to the file specified by fd.
 
-var minified = fs.createWriteStream('./foundation.css', 'utf8');
+var minified = fs.createWriteStream('./foundation.css', 'utf8'); //it is unsafe to use fs.write multiple times on the same file without waiting for the callback. For this scenario, fs.createWriteStream is strongly recommended.
 var Transform = stream.Transform;
 var fileMini = new Transform();
-var string = "";
+
 
 
 fileMini._transform = function(chunk, encoding, done){
   var string = "";
   string += chunk;
   string = string.replace(/\s/g, "").replace(/(\/\*).*(\*\/)/g, "");
-  minified.write(string, 'utf8');
+  process.stdout.write(string, 'utf8');
 };
 
 process.stdin
