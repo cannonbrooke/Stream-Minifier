@@ -7,14 +7,14 @@ var fileMini = new Transform();
 
 
 
-fileMini._transform = function(chunk, encoding, done){
+fileMini._transform = function(chunk, encoding, done){ //chunk buffer, encoding string, callback
   var string = "";
-  string += chunk;
-  string = string.replace(/\s/g, "").replace(/(\/\*).*(\*\/)/g, "");
-  process.stdout.write(string, 'utf8');
+  string += chunk; // chunk is object but when added to string becomes string
+  string = string.replace(/\s/g, "").replace(/(\/\*).*(\*\/)/g, ""); // goes through string finds values to replace
+  process.stdout.write(string, 'utf8'); // sends out the data
 };
 
-process.stdin
+process.stdin // pipes in the data
   .pipe(fileMini)
   .pipe(process.stdout);
 
